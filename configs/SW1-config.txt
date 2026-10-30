@@ -1,0 +1,38 @@
+vlan 10
+name SALES
+vlan 20
+name IT
+vlan 30
+name HR
+
+port-channel load-balance src-dst-ip
+
+interface range f0/1-5
+    description ## IN VLAN 10 ##
+    switchport mode access
+    switchport nonegotiate
+    switchport access vlan 10
+
+interface range f0/6-10
+    description ## IN VLAN 20 ##
+    switchport mode access
+    switchport nonegotiate
+    switchport access vlan 20
+
+interface range f0/11-15
+    description ## IN VLAN 30 ##
+    switchport mode access
+    switchport nonegotiate
+    switchport access vlan 30
+
+interface range f0/22-24
+    description ## IN CHANNEL 1 ##
+    channel-protocol pagp
+    channel-group 1 mode desirable
+
+interface port-channel 1 
+    description ## CHANNEL 1 MEMBERS f0/22-24 ##
+    switchport mode trunk
+    switchport nonegotiate
+    switchport trunk allowed vlan 10,20,30
+    switchport trunk native vlan 1001

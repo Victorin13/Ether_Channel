@@ -1,0 +1,35 @@
+ip routing
+port-channel load-balance src-dst-ip
+
+vlan 50
+name SERVERS
+
+ip route 172.16.10.0 255.255.255.0 10.0.0.1
+ip route 172.16.20.0 255.255.255.0 10.0.0.1
+ip route 172.16.30.0 255.255.255.0 10.0.0.1
+
+interface range f0/22-24
+    description ## IN CHANNEL 1 ##
+    channel-protocol lacp
+    channel-group 1 mode active
+
+interface range g0/1-2
+    description ## IN CHANNEL 2 ##
+    no switchport
+    channel-group 2 mode on
+
+interface port-channel 1 
+    description ## CHANNEL 1 : MEMBERS f0/22-24 ##
+    switchport trunk encapsulation dot1Q
+    switchport mode trunk
+    switchport nonegotiate
+    switchport trunk allowed vlan 50
+    switchport trunk native vlan 1001
+
+interface port-channel 2
+    description ## CHANNEL 2 : MEMBERS g0/1-2 ##
+    ip address 10.0.0.2 255.255.255.252
+
+interface vlan 50
+    description ## GATEWAY FOR VLAN 50 ##
+    ip address 172.16.50.254 255.255.255.0

@@ -1,0 +1,22 @@
+vlan 50
+name SERVERS
+
+port-channel load-balance src-dst-ip
+
+interface range g0/1-2
+    description ## IN VLAN 50 ##
+    switchport mode access
+    switchport nonegotiate
+    switchport access vlan 50
+
+interface range f0/22-24
+    description ## IN CHANNEL 1 ##
+    channel-protocol lacp
+    channel-group 1 mode active
+
+interface port-channel 1 
+    description ## CHANNEL 1 MEMBERS f0/22-24 ##
+    switchport mode trunk
+    switchport nonegotiate
+    switchport trunk allowed vlan 50
+    switchport trunk native vlan 1001

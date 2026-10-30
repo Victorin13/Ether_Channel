@@ -1,0 +1,267 @@
+!----------SW1----------
+SW1#show vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/16, Fa0/17, Fa0/18, Fa0/19
+                                                Fa0/20, Fa0/21, Gig0/1, Gig0/2
+10   SALES                            active    Fa0/1, Fa0/2, Fa0/3, Fa0/4
+                                                Fa0/5
+20   IT                               active    Fa0/6, Fa0/7, Fa0/8, Fa0/9
+                                                Fa0/10
+30   HR                               active    Fa0/11, Fa0/12, Fa0/13, Fa0/14
+                                                Fa0/15
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+SW1#
+SW1#show interface trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Po1         on           802.1q         trunking      1001
+
+Port        Vlans allowed on trunk
+Po1         10,20,30
+
+Port        Vlans allowed and active in management domain
+Po1         10,20,30
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Po1         10,20,30
+
+SW1#
+SW1#show etherchannel summary
+Flags:  D - down        P - in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 1
+Number of aggregators:           1
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+----------------------------------------------
+
+1      Po1(SU)           PAgP   Fa0/22(P) Fa0/23(P) Fa0/24(P) 
+SW1#
+
+
+!----------SW2----------
+SW2#show vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/1, Fa0/2, Fa0/3, Fa0/4
+                                                Fa0/5, Fa0/6, Fa0/7, Fa0/8
+                                                Fa0/9, Fa0/10, Fa0/11, Fa0/12
+                                                Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                Fa0/17, Fa0/18, Fa0/19, Fa0/20
+                                                Fa0/21
+50   SERVERS                          active    Gig0/1, Gig0/2
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+SW2#show interface trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Po1         on           802.1q         trunking      1001
+
+Port        Vlans allowed on trunk
+Po1         50
+
+Port        Vlans allowed and active in management domain
+Po1         50
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Po1         50
+
+SW2#show etherchannel summary
+Flags:  D - down        P - in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 1
+Number of aggregators:           1
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+----------------------------------------------
+
+1      Po1(SU)           LACP   Fa0/22(P) Fa0/23(P) Fa0/24(P) 
+SW2#
+
+
+!----------MLS1----------
+MLS1#show vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/1, Fa0/2, Fa0/3, Fa0/4
+                                                Fa0/5, Fa0/6, Fa0/7, Fa0/8
+                                                Fa0/9, Fa0/10, Fa0/11, Fa0/12
+                                                Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                Fa0/17, Fa0/18, Fa0/19, Fa0/20
+                                                Fa0/21
+10   SALES                            active    
+20   IT                               active    
+30   HR                               active    
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+MLS1#show interface trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Po1         on           802.1q         trunking      1001
+
+Port        Vlans allowed on trunk
+Po1         10,20,30
+
+Port        Vlans allowed and active in management domain
+Po1         10,20,30
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Po1         10,20,30
+
+MLS1#show etherchannel summary
+Flags:  D - down        P - in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 2
+Number of aggregators:           2
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+----------------------------------------------
+
+1      Po1(SU)           PAgP   Fa0/22(P) Fa0/23(P) Fa0/24(P) 
+2      Po2(RU)           -      Gig0/1(P) Gig0/2(P) 
+MLS1#show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol 
+Port-channel1          unassigned      YES unset  up                    up 
+Port-channel2          10.0.0.1        YES manual up                    up 
+FastEthernet0/22       unassigned      YES unset  up                    up 
+FastEthernet0/23       unassigned      YES unset  up                    up 
+FastEthernet0/24       unassigned      YES unset  up                    up 
+GigabitEthernet0/1     unassigned      YES unset  up                    up 
+GigabitEthernet0/2     unassigned      YES unset  up                    up 
+Vlan1                  unassigned      YES unset  administratively down down 
+Vlan10                 172.16.10.254   YES manual up                    up 
+Vlan20                 172.16.20.254   YES manual up                    up 
+Vlan30                 172.16.30.254   YES manual up                    up
+MLS1#show ip route
+Codes: C - connected, S - static, I - IGRP, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     10.0.0.0/30 is subnetted, 1 subnets
+C       10.0.0.0 is directly connected, Port-channel2
+     172.16.0.0/24 is subnetted, 4 subnets
+C       172.16.10.0 is directly connected, Vlan10
+C       172.16.20.0 is directly connected, Vlan20
+C       172.16.30.0 is directly connected, Vlan30
+S       172.16.50.0 [1/0] via 10.0.0.2
+
+MLS1#
+
+
+!----------MLS2----------
+MLS2#show vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/1, Fa0/2, Fa0/3, Fa0/4
+                                                Fa0/5, Fa0/6, Fa0/7, Fa0/8
+                                                Fa0/9, Fa0/10, Fa0/11, Fa0/12
+                                                Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                Fa0/17, Fa0/18, Fa0/19, Fa0/20
+                                                Fa0/21
+50   SERVERS                          active    
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+MLS2#show interface trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Po1         on           802.1q         trunking      1001
+
+Port        Vlans allowed on trunk
+Po1         50
+
+Port        Vlans allowed and active in management domain
+Po1         50
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Po1         50
+
+MLS2#show etherchannel summary
+Flags:  D - down        P - in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 2
+Number of aggregators:           2
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+----------------------------------------------
+
+1      Po1(SU)           LACP   Fa0/22(P) Fa0/23(P) Fa0/24(P) 
+2      Po2(RU)           -      Gig0/1(P) Gig0/2(P) 
+MLS2#show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol 
+Port-channel1          unassigned      YES unset  up                    up 
+Port-channel2          10.0.0.2        YES manual up                    up 
+FastEthernet0/22       unassigned      YES unset  up                    up 
+FastEthernet0/23       unassigned      YES unset  up                    up 
+FastEthernet0/24       unassigned      YES unset  up                    up 
+GigabitEthernet0/1     unassigned      YES unset  up                    up 
+GigabitEthernet0/2     unassigned      YES unset  up                    up 
+Vlan1                  unassigned      YES unset  administratively down down 
+Vlan50                 172.16.50.254   YES manual up                    up
+MLS2#show ip route
+Codes: C - connected, S - static, I - IGRP, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     10.0.0.0/30 is subnetted, 1 subnets
+C       10.0.0.0 is directly connected, Port-channel2
+     172.16.0.0/24 is subnetted, 4 subnets
+S       172.16.10.0 [1/0] via 10.0.0.1
+S       172.16.20.0 [1/0] via 10.0.0.1
+S       172.16.30.0 [1/0] via 10.0.0.1
+C       172.16.50.0 is directly connected, Vlan50
+
+MLS2#
